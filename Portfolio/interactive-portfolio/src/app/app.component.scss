@@ -1,0 +1,106 @@
+// ── Variables ─────────────────────────────────────────
+
+$bg:         #1d1d1f;
+$text:       #f5f5f7;
+$cta-bg:     #0A84FF;
+$container:  960px;
+
+// ── Base ──────────────────────────────────────────────
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html {
+  background: $bg;
+  color:      $text;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  scroll-behavior: smooth;
+}
+a { text-decoration:none; color:inherit; }
+.cta {
+  display:inline-block; background:$cta-bg; color:#fff; padding:.75rem 1.5rem;
+  border-radius:4px; font-weight:600; transition:.3s;
+  &:hover { opacity:.9; transform: translateY(-2px); }
+}
+
+// ── Section Reveal ────────────────────────────────────
+
+.section {
+  opacity:0; transform:translateY(40px);
+  transition:opacity .8s ease, transform .8s ease;
+  &.in-view {
+    opacity:1; transform:translateY(0);
+  }
+}
+
+// ── HEADER (in your shared/header.component.scss) ────
+
+header {
+  position:fixed; top:0; width:100%; background:#000;
+  color:#f5f5f7; z-index:1000; box-shadow:0 2px 15px rgba(0,0,0,.5);
+  .header-inner { display:flex; justify-content:space-between; align-items:center; height:60px; padding:0 1rem; }
+  .logo { font-size:1.25rem; font-weight:bold; }
+  nav a { margin-left:1.5rem; transition:.3s; &:hover { color:$cta-bg; } }
+}
+main { margin-top:60px; }
+
+
+// ── HERO ──────────────────────────────────────────────
+
+.hero-vid {
+  position:relative; height:100vh; overflow:hidden;
+  &__bg { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; filter:brightness(.6); }
+  &__overlay {
+    position:relative; z-index:10;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center;
+    h1 { font-size:3rem; margin-bottom:.5rem; }
+    p  { font-size:1.25rem; margin-bottom:1.5rem; color:#ddd; }
+    .scroll-indicator { margin-top:2rem; span{color:#ccc;} .arrow{ display:block; margin:.5rem auto 0;width:12px;height:12px;border:solid #ccc;border-width:0 2px 2px 0;transform:rotate(45deg);animation:bounce 1.5s infinite; } }
+  }
+}
+@keyframes bounce { 0%,100%{transform:translateY(0) rotate(45deg)} 50%{transform:translateY(8px) rotate(45deg)} }
+
+// ── ABOUT ─────────────────────────────────────────────
+
+.about {
+  padding:100px 1rem;
+  .about-content {
+    margin:auto; max-width:$container; display:flex; flex-wrap:wrap; gap:2rem; align-items:center;
+    img.about-photo { flex-shrink:0; width:200px; height:200px; border-radius:50%; object-fit:cover; box-shadow:0 4px 15px rgba(0,0,0,.5); }
+    div {
+      h2 { font-size:2.5rem; margin-bottom:.5rem; }
+      p  { color:#ccc; line-height:1.6; }
+      .hobbies { list-style:none; margin:1rem 0;
+        li { display:flex; align-items:center; margin-bottom:.75rem;
+          img{width:24px;margin-right:.5rem;}
+        }
+      }
+      .logos { display:flex; gap:1rem; img{height:40px;filter:grayscale(100%) opacity(.7);transition:.3s;&:hover{filter:grayscale(0) opacity(1)}} }
+    }
+  }
+}
+
+// ── PROJECTS ──────────────────────────────────────────
+
+.projects {
+  padding:100px 1rem;
+  h2 { text-align:center; margin-bottom:2rem; font-size:2.5rem; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5rem; }
+  .card {
+    background:rgba(255,255,255,0.05); padding:1.5rem; border-radius:8px; text-align:center; transition:.3s;
+    &:hover { background:rgba(255,255,255,0.1); transform:translateY(-4px); }
+    h3{margin-bottom:.5rem;} p{color:#ccc;margin-bottom:1rem;}
+  }
+}
+
+// ── CONTACT ───────────────────────────────────────────
+
+.contact {
+  padding:100px 1rem;
+  h2 { text-align:center; margin-bottom:2rem; font-size:2.5rem; }
+  form {
+    max-width:400px; margin:auto; display:flex; flex-direction:column; gap:1rem;
+    input, textarea {
+      padding:.75rem; border:none; border-radius:4px; background:rgba(255,255,255,0.1); color:#fff; resize:none;
+    }
+    button { align-self:center; }
+  }
+}
