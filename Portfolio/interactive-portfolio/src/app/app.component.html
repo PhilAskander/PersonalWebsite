@@ -1,5 +1,5 @@
-<app-header></app-header>
-<section #section id="hero" class="hero-vid section">
+<app-header ></app-header>
+<section #section id="home" class="hero-vid section">
   <video
   #heroVideo
   muted            
@@ -30,55 +30,351 @@
 </section>
 <main>
 
-  <!-- ABOUT -->
-  <section #section id="about" class="about section">
-    <div class="about-content">
-      <img src="assets/profile.png" alt="Phil Askander" class="about-photo">
-      <div>
-        <h2>Who is Phil Askander?</h2>
-        <p>
-          Software Engineer at Fidelity Investments<br>
-          BSc in CS & Math (UMass Lowell) • MSc in CS (Northeastern University)
-        </p>
-        <ul class="hobbies">
-          <li><img src="assets/icons/basketball.svg">Basketball coach & die-hard Celtics fan</li>
-          <li><img src="assets/icons/football.svg">Football enthusiast</li>
-        </ul>
-        <div class="logos">
-          <img src="assets/logos/umass.png" alt="UMass Lowell">
-          <img src="assets/logos/northeastern.png" alt="Northeastern">
-          <img src="assets/logos/fidelity.png" alt="Fidelity">
+<button
+  *ngIf="!contactOpen"
+  class="contact-btn-fixed"
+  (click)="toggleContact()"
+>
+
+  Contact Me
+</button>
+
+
+<div
+  class="contact-drawer"
+  [class.open]="contactOpen"
+>
+ <button class="close-btn" type="button" (click)="toggleContact()">×</button>
+<form (ngSubmit)="onSubmitContact()" #contactForm="ngForm">
+  <label>
+    First Name
+    <input name="firstName" [(ngModel)]="firstName" required />
+  </label>
+  <label>
+    Last Name
+    <input name="lastName" [(ngModel)]="lastName" required />
+  </label>
+  <label>
+    Email Address
+    <input name="contactEmail" type="email" [(ngModel)]="contactEmail" required />
+  </label>
+  <label>
+    Message
+    <textarea name="contactMessage" rows="4" [(ngModel)]="contactMessage" required></textarea>
+  </label>
+  <button type="submit" class="btn submit-btn">
+    Send
+  </button>
+</form>
+
+</div>
+
+  <section
+    #section
+    id="intro"
+    class="intro-card-section section"
+  >
+
+    <div class="container" id="about">
+      <h2 class="section-title">About Me</h2>
+      <div class="intro-card">
+        <!-- decorative blobs -->
+        <div class="blob blob--tl"></div>
+        <div class="blob blob--br"></div>
+
+        <div class="intro-content">
+          <!-- left: your portrait -->
+          <div class="intro-image">
+            <img
+              src="assets/profile.png"
+              alt="Phil Askander"
+            />
+          </div>
+
+          <!-- right: your text -->
+          <div class="intro-text">
+            <h1>
+            <span class="highlight">Phil Askander</span>
+            </h1>
+            <div class="subhead">
+              Software Engineer @ Fidelity Investments
+            </div>
+            <p>
+              I bridge design and code each day at Fidelity Investments,
+              crafting pixel-perfect web &amp; mobile apps that scale
+              beautifully.
+            </p>
+            <a href="#projects" class="btn" (click)="toggleContact()">Contact Me →</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section #section id="projects" class="projects section">
-    <h2>Projects</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>App One</h3>
-        <p>A slick Angular PWA</p>
-        <a href="#">Explore →</a>
-      </div>
-      <div class="card">
-        <h3>App Two</h3>
-        <p>Node + Express API</p>
-        <a href="#">Explore →</a>
-      </div>
-    </div>
-  </section>
+  <section
+  #section
+  id="experience"
+  class="experience-timeline section"
+>
+  <div class="container"  id="journey">
+    <h2 class="section-title">My Journey</h2>
 
-  <!-- CONTACT -->
-  <section #section id="contact" class="contact section">
-    <h2>Contact</h2>
-    <form (ngSubmit)="onContact($event)" #contactForm="ngForm">
-      <input name="name" ngModel type="text"   placeholder="Your Name"  required>
-      <input name="email" ngModel type="email" placeholder="Your Email" required>
-      <textarea name="message" ngModel rows="4" placeholder="Your Message" required></textarea>
-      <button type="submit" class="cta">Send Message</button>
-    </form>
-  </section>
+    <div class="timeline" #timeline>
+      <!-- moving pointer & floating year -->
+      <div class="timeline-pointer"></div>
+      <div class="timeline-year" #timelineYear>2021</div>
+
+      <!-- Johnson Controls Inc. -->
+      <div class="timeline-item" #timelineItem data-year="2021">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3 class="role">Software Engineering Intern</h3>
+          <span class="meta">
+            Johnson Controls Inc. — Westford, MA<br>
+            September 2021 – December 2021
+          </span>
+          <ul>
+            <li>
+              Developed an automated algorithm to pull data from SQL Server into Excel via T-SQL and C#.
+            </li>
+            <li>
+              Paired with senior automation engineers to integrate error-handling and logging for unattended report generation.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CADSPARC @ MIT -->
+      <div class="timeline-item" #timelineItem data-year="2022">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3 class="role">Web/UX Intern</h3>
+          <span class="meta">
+            CADSPARC — MIT, Cambridge, MA<br>
+            December 2021 – March 2022
+          </span>
+          <ul>
+            <li>
+              Built a customer-facing site using HTML, CSS & vanilla JavaScript.
+            </li>
+            <li>
+              Programmed a canvas drawing tool that converted 2D sketches into 3D models via a small ML inference service.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- eClinical Solutions -->
+      <div class="timeline-item" #timelineItem data-year="2022">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3 class="role">QA Software Engineer Intern</h3>
+          <span class="meta">
+            eClinical Solutions — Mansfield, MA<br>
+            March 2022 – September 2022
+          </span>
+          <ul>
+            <li>
+              Managed and executed test plans & test cases in C#, covering edge cases for REST APIs.
+            </li>
+            <li>
+              Created an Angular dashboard to display server CPU & I/O utilization in real time.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Schneider Electric -->
+      <div class="timeline-item" #timelineItem data-year="2022">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3 class="role">Embedded Software Engineering Intern</h3>
+          <span class="meta">
+            Schneider Electric — Andover, MA<br>
+            September 2022 – May 2023
+          </span>
+          <ul>
+            <li>
+              Ported core connectors and event managers to FreeRTOS on NXP microcontrollers.
+            </li>
+            <li>
+              Validated real-time scheduling and interrupt handling under ICEL-RT.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Undergraduate Graduation -->
+      <div class="timeline-item" #timelineItem data-year="2023">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3 class="role">Bachelor’s Degree in CS & Math</h3>
+          <span class="meta">
+            UMass Lowell — May 2023
+          </span>
+          <ul>
+            <li>
+              BSc in Computer Science with a minor in Mathematics.
+            </li>
+            <li>
+              Graduated May 2023 with a 3.8 GPA and Dean’s List honors.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Fidelity Investments -->
+      <div class="timeline-item" #timelineItem data-year="2023">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3 class="role">Software Developer</h3>
+          <span class="meta">
+            Fidelity Investments — Merrimack, NH<br>
+            June 2023 – Present
+          </span>
+          <ul>
+            <li>
+              Completed an intensive 18-week full-stack program covering HTML, CSS, Java, Spring Boot, REST, JavaScript, SQL & Angular.
+            </li>
+            <li>
+              Led design & development of an AI-driven chatbot for the frontend, including manifest parsing for Kubernetes compliance.
+            </li>
+            <li>
+              Architected a Python server backend & Jenkins pipelines to build images, run Sonar scans, and automate container deployments.
+            </li>
+            <li>
+              Co-led creation of a modern learning site frontend, collaborating on UI/UX with senior developers.
+            </li>
+            <li>
+              Served as the primary frontend expert—building interfaces in HTML, CSS, JS & TS.
+            </li>
+            <li>
+              Spearheaded Kubernetes feature requests: ran client meetings, drafted JIRA stories, & supported POCs.
+            </li>
+            <li>
+              Collaborated on API integration with Swagger-documented endpoints & versioning.
+            </li>
+            <li>
+              Participated in on-call rotations to ensure smooth production deployments and rapid issue resolution.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Graduate Graduation -->
+      <div class="timeline-item" #timelineItem data-year="2025">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3 class="role">Master’s Degree in Computer Science</h3>
+          <span class="meta">
+            Northeastern University — May 2025
+          </span>
+          <ul>
+            <li>
+              MSc in Computer Science—expected May 2025.
+            </li>
+            <li>
+              Focus on distributed systems, machine learning, and software architecture.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL PROJECTS -->
+<section
+  #section
+  id="projects"
+  class="projects section"
+>
+  <div class="container">
+    <h2 class="section-title">Personal Projects</h2>
+
+    <div class="project-grid">
+      <!-- Project Card 1 -->
+      <div class="project-card">
+        <img src="assets/clinic_project.png" alt="The Clinic Project">
+        <div class="project-info">
+          <h3>The Clinic Project</h3>
+          <p>The Clinic Project is designed to create a fully functional hospital system in Java.</p>
+          <a href="https://github.com/FeinbergCS5010Fall2023/The-Clinic-Project" target="_blank">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+
+      <!-- Project Card 2 -->
+      <div class="project-card">
+        <img src="assets/sokobon.png" alt="Project Two Screenshot">
+        <div class="project-info">
+          <h3>Sokobon</h3>
+          <p>A full design of the well known game, Sokobon, written in C++</p>
+          <a href="https://github.com/PhilAskander/Sokoban" target="_blank">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+
+      <!-- Project Card 3 -->
+      <div class="project-card">
+        <img src="assets/phil-hue.png" alt="Project Three Screenshot">
+        <div class="project-info">
+          <h3>Phil Hue SmartLight System</h3>
+          <p>This is a home made <strong>Phil</strong>-Hue smart light system using LEDs, resistors, and an arduino.</p>
+          <a href="https://github.com/PhilAskander/Phil-Hue-Smartlight-" target="_blank">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+
+       <!-- Project Card 4 -->
+      <div class="project-card">
+        <img src="assets/evil_hangman.png" alt="Project Three Screenshot">
+        <div class="project-info">
+          <h3>Evil Hangman</h3>
+          <p>A twist on the classical hangman game where the computer cheats! Written entirely in C. </p>
+          <a href="https://github.com/PhilAskander/Evil-Hangman" target="_blank">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+
+      <!-- …add more cards here… -->
+    </div>
+  </div>
+</section>
+
+
+<section #section id="conclusion" class="conclusion section">
+  <div class="container">
+    <h2 class="section-title">Let’s Build the Future Together</h2>
+    <p>
+      Thanks for taking the time to explore my work.  
+      I’m always on the lookout for exciting new challenges—if you like what you see,  
+      let’s connect and create something amazing.
+    </p>
+    <a href="#contact" class="btn large-cta" (click)="toggleContact()">Get In Touch →</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-left">
+      <small>© 2025 Philopater Askander. All rights reserved.</small>
+    </div>
+    <div class="footer-right">
+      <a href="https://github.com/philaskander" target="_blank" aria-label="GitHub">
+        <img src="assets/logos/github.png" alt="User icon" class="icon--white">
+      </a>
+      <a href="http://www.linkedin.com/in/PhilopaterAskander" target="_blank" aria-label="LinkedIn">
+        <img src="assets/logos/linkedin_logo.png" alt="">
+      </a>
+      <a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
+    </div>
+  </div>
+</footer>
 
 </main>

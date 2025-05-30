@@ -1,9 +1,12 @@
 // ── Variables ─────────────────────────────────────────
 
-$bg:         #1d1d1f;
-$text:       #f5f5f7;
-$cta-bg:     #0A84FF;
-$container:  960px;
+// ── Palette ─────────────────────────────────────────────
+$bg       : #1c1c1e;
+$panel    : #2b2b2f;
+$accent   : #007A33;
+$text     : #f5f5f7;
+$subtext  : #a1a1aa;
+$cta-bg:     #0A84FF;   
 
 // ── Base ──────────────────────────────────────────────
 
@@ -59,48 +62,562 @@ main { margin-top:60px; }
 @keyframes bounce { 0%,100%{transform:translateY(0) rotate(45deg)} 50%{transform:translateY(8px) rotate(45deg)} }
 
 // ── ABOUT ─────────────────────────────────────────────
+// ── Palette ─────────────────────────────────────────────
+$bg-dark:    #1c1c1e;     // page background
+$card-bg:    #2b2b2f;     // card surface
+$accent:     #007A33;     // celtic green accent
+$text-light: #f5f5f7;     // primary text
+$subtext:    #a1a1aa;     // secondary text
 
-.about {
-  padding:100px 1rem;
-  .about-content {
-    margin:auto; max-width:$container; display:flex; flex-wrap:wrap; gap:2rem; align-items:center;
-    img.about-photo { flex-shrink:0; width:200px; height:200px; border-radius:50%; object-fit:cover; box-shadow:0 4px 15px rgba(0,0,0,.5); }
-    div {
-      h2 { font-size:2.5rem; margin-bottom:.5rem; }
-      p  { color:#ccc; line-height:1.6; }
-      .hobbies { list-style:none; margin:1rem 0;
-        li { display:flex; align-items:center; margin-bottom:.75rem;
-          img{width:24px;margin-right:.5rem;}
+// ── Container helper ──────────────────────────────────
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// ── Section wrapper ───────────────────────────────────
+.intro-card-section {
+  background: $bg-dark;
+  padding: 4rem 0;
+
+  // hide everything until in-view
+  .intro-card,
+  .intro-image,
+  .intro-text h1,
+  .intro-text .subhead,
+  .intro-text p,
+  .intro-text .btn {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  // when this section scrolls into view…
+  &.in-view {
+    .intro-card {
+      animation: cardEnter 0.6s ease-out forwards;
+    }
+    .blob {
+      animation: blobFloat 6s ease-in-out infinite;
+    }
+    .intro-image {
+      animation: fadeInUp 0.6s ease-out 0.3s forwards;
+    }
+    .intro-text h1 {
+      animation: fadeInUp 0.6s ease-out 0.5s forwards;
+    }
+    .intro-text .subhead {
+      animation: fadeInUp 0.6s ease-out 0.7s forwards;
+    }
+    .intro-text p {
+      animation: fadeInUp 0.6s ease-out 0.9s forwards;
+    }
+    .intro-text .btn {
+      animation: fadeInUp 0.6s ease-out 1.1s forwards;
+    }
+  }
+}
+
+// ── Card itself ────────────────────────────────────────
+.intro-card {
+  position: relative;
+  background: $card-bg;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+
+  .blob {
+    position: absolute;
+    background: $accent;
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+  }
+  .blob--tl { top: -50px; left: -50px; }
+  .blob--br { bottom: -50px; right: -50px; }
+
+  .intro-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+  }
+
+  .intro-image {
+    img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 8px;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease;
+      &:hover { transform: scale(1.03); }
+    }
+  }
+
+  .intro-text {
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: $text-light;
+      line-height: 1.1;
+      .highlight { color: $accent; }
+    }
+    .subhead {
+      font-size: 1.125rem;
+      color: $accent;
+      margin-bottom: 1rem;
+    }
+    p {
+      color: $text-light;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .btn {
+      display: inline-block;
+      background: $accent;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      &:hover {
+        background: darken($accent, 5%);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      }
+    }
+  }
+}
+
+// ── Keyframes ──────────────────────────────────────────
+@keyframes cardEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(8px, -8px) scale(1.05); }
+}
+ 
+
+// ── Colors ───────────────────────────────────────────────
+$bg-dark:    #1c1c1e;
+$card-bg:    #2b2b2f;
+$accent:     #007A33; 
+$text-light: #f5f5f7;
+$subtext:    #a1a1aa;
+
+// ── Container ───────────────────────────────────────────
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: $text-light;
+  margin-bottom: 2rem;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: $accent;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+  }
+}
+
+// ── Section & Title ─────────────────────────────────────
+.experience-timeline {
+  background: $bg-dark;
+  padding: 4rem 0;
+
+  // As soon as the .in-view class is applied to the section,
+  // fade all timeline-items in:
+  &.in-view {
+    .timeline-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+// ── Timeline ─────────────────────────────────────────────
+
+
+.timeline {
+  position: relative;
+  margin: 0;
+  padding: 0;
+
+  // the vertical spine
+  &::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: $accent;
+  }
+
+  // moving pointer
+  .timeline-pointer {
+    position: absolute;
+    left: 20px;
+    width: 16px;
+    height: 16px;
+    margin-left: -2px;   // center on the 4px line
+    background: $accent;
+    border-radius: 50%;
+    transition: top 0.3s ease-out;
+    z-index: 2;
+  }
+
+  // floating year label
+  .timeline-year {
+    position: absolute;
+    left: -60px;
+    top: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $accent;
+    transition: top 0.3s ease-out;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-left: 60px;
+
+    // start hidden & shifted down
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out,
+                transform 0.6s ease-out;
+
+    // hide the static per-item dot if you like
+    .timeline-marker { opacity: 0; }
+
+    // highlight + reveal when active
+    &.active {
+      opacity: 1;
+      transform: translateY(0);
+
+      .timeline-content {
+        transform: scale(1.02);
+        box-shadow: 0 8px 24px rgba($accent, .4);
+      }
+    }
+
+    .timeline-content {
+      background: $card-bg;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+
+      .role {
+        margin: 0 0 .25rem;
+        color: $text-light;
+        font-size: 1.25rem;
+      }
+
+      .meta {
+        display: block;
+        font-size: 0.875rem;
+        color: $subtext;
+        margin-bottom: .75rem;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.25rem;
+        color: $subtext;
+        font-size: 0.9rem;
+        line-height: 1.4;
+
+        li {
+          margin-bottom: 0.5rem;
         }
       }
-      .logos { display:flex; gap:1rem; img{height:40px;filter:grayscale(100%) opacity(.7);transition:.3s;&:hover{filter:grayscale(0) opacity(1)}} }
     }
   }
 }
 
-// ── PROJECTS ──────────────────────────────────────────
 
-.projects {
-  padding:100px 1rem;
-  h2 { text-align:center; margin-bottom:2rem; font-size:2.5rem; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5rem; }
-  .card {
-    background:rgba(255,255,255,0.05); padding:1.5rem; border-radius:8px; text-align:center; transition:.3s;
-    &:hover { background:rgba(255,255,255,0.1); transform:translateY(-4px); }
-    h3{margin-bottom:.5rem;} p{color:#ccc;margin-bottom:1rem;}
-  }
+/* ── Fixed Contact Button ───────────────────────────── */
+.contact-btn-fixed {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: $accent;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  z-index: 1001;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform .2s;
+  &:hover { transform: translateY(-2px); }
 }
 
-// ── CONTACT ───────────────────────────────────────────
+/* ── Sliding Drawer ─────────────────────────────────── */
+.contact-drawer {
+  position: fixed;
+  top: 0; 
+  right: -400px; /* hidden by default */
+  width: 350px;
+  height: 100%;
+  background: $card-bg;
+  padding: 2rem 1.5rem;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.6);
+  transition: right .3s ease-out;
+  z-index: 1000;
 
-.contact {
-  padding:100px 1rem;
-  h2 { text-align:center; margin-bottom:2rem; font-size:2.5rem; }
+  &.open {
+    right: 0;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: $text-light;
+    cursor: pointer;
+  }
+
+  h2 {
+    margin-top: 0;
+    color: $text-light;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
   form {
-    max-width:400px; margin:auto; display:flex; flex-direction:column; gap:1rem;
-    input, textarea {
-      padding:.75rem; border:none; border-radius:4px; background:rgba(255,255,255,0.1); color:#fff; resize:none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      color: $text-light;
+      font-size: 0.9rem;
+
+      input, textarea {
+        margin-top: 0.25rem;
+        padding: 0.5rem;
+        border: 1px solid darken($card-bg, 10%);
+        border-radius: 4px;
+        background: darken($card-bg, 5%);
+        color: $text-light;
+      }
     }
-    button { align-self:center; }
+
+    .submit-btn {
+      margin-top: 0.5rem;
+      align-self: flex-end;
+      background: $accent;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+      &:hover {
+        transform: translateY(-2px);
+        background: darken($accent, 5%);
+      }
+    }
+  }
+
+  
+  
+}
+
+// ── PROJECTS SECTION ───────────────────────────────────
+.projects {
+  background: $bg-dark;
+  padding: 4rem 0;
+
+  &.in-view {
+    .project-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .project-card {
+    background: $card-bg;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+
+    // start hidden:
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out, box-shadow 0.3s ease;
+    
+    // fade+slide in when .in-view added by your observer
+    &.in-view {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 160px;
+    }
+    .project-info {
+      padding: 1rem;
+      color: $text-light;
+
+      h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1.25rem;
+      }
+      p {
+        margin: 0 0 1rem;
+        font-size: 0.95rem;
+        color: $subtext;
+        line-height: 1.4;
+      }
+      a {
+        font-weight: 600;
+        color: $accent;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover { color: lighten($accent, 10%); }
+      }
+    }
+
+    // hover “lift” effect
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+      transform: translateY(-4px);
+    }
   }
 }
+
+// ── CONCLUSION SECTION ─────────────────────────────────
+.conclusion {
+  background: $bg-dark;
+  padding: 4rem 0;
+  text-align: center;
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  p {
+    color: $subtext;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 1.5rem 0 2rem;
+  }
+  
+  .large-cta {
+    @extend .btn;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+
+  .large-cta:hover{
+    color:$accent;
+    transition: smooth;
+  }
+}
+// ── FOOTER ─────────────────────────────────────────────
+.site-footer {
+  background: rgba($panel, 0.8);
+  backdrop-filter: blur(8px);
+  padding: 1.5rem 0;
+  font-size: 0.875rem;
+  color: $text-light;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .footer-left {
+    small { color: $subtext; }
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      color: $text-light;
+      transition: transform 0.2s, opacity 0.2s;
+
+      img { width: 24px; height: auto; }
+
+      &:hover {
+        transform: translateY(-2px);
+        opacity: 0.8;
+      }
+    }
+
+    .back-to-top {
+      font-size: 1.25rem;
+      text-decoration: none;
+      line-height: 1;
+    }
+  }
+
+}
+
+.icon--white {
+  /* make any dark pixels become white */
+  filter: brightness(0) invert(1);
+}
+
+

@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +8,8 @@ import { Component, HostListener } from '@angular/core';
 export class HeaderComponent {
   isScrolled = false;
   menuOpen = false;
+  @ViewChild('mobileToggle', { static: false }) mobileToggleEl!: ElementRef<HTMLButtonElement>;
+
 
   @HostListener('window:scroll')
   onWindowScroll() {
@@ -17,4 +19,15 @@ export class HeaderComponent {
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
+
+  toggleHamburgerMenu() {
+    const el = document.querySelector('.mobile-nav');
+    if (!el) {
+      console.warn('mobile-nav element not found!');
+      return;
+    }
+    el.classList.toggle('open');
+  }
+  
+  
 }

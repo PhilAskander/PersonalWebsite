@@ -1,25 +1,28 @@
 // src/app/shared/header.component.scss
 
-// Color variables
-$cta-color: #0A84FF;
+// ── Colors ───────────────────────────────────────────────
+$bg-dark:    #1c1c1e;
+$card-bg:    #2b2b2f;
+$accent:     #007A33; 
+$cta-color: #007A33;
+$text-light: #f5f5f7;
+$subtext:    #a1a1aa;
 $white:     #f5f5f7;
 $black:     #000;
+// at top of your file
+$logo-height:    10vw !default;
+$logo-max-height: 150px !default;
 
 header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 160px;      // same as your old header-inner height
+  height: 160px;
   z-index: 1000;
   background: transparent;
-  /* no .scrolled state here per your request */
-
-  // Make this the positioning context for our absolutes
-  // (fixed counts as positioned, so no need for relative)
 
   .header-inner {
-    // just center your content wrapper if you need it for anything else
     max-width: 960px;
     height: 100%;
     margin: auto;
@@ -27,119 +30,184 @@ header {
     display: flex;
   }
 
-  // ───────────────────────────────────────────────────────────
-  // Logo: fixed to the left edge, vertically centered
-  // ───────────────────────────────────────────────────────────
-  .logo {
-    position: absolute;
-    top: 50%;
-    left: 1rem;               // distance from viewport’s left
-    transform: translateY(-50%);
+// your existing logo rule
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
 
-    img {
-      height: 10vw;           // scales down on narrow viewports
-      max-height: 150px;      // caps at 150px
-      width: auto;
-      display: block;
-    }
+  img {
+    height:      $logo-height;
+    max-height:  $logo-max-height;
+    width:       auto;
+    display:     block;
   }
+}
 
-  // ───────────────────────────────────────────────────────────
-  // Pill-style nav: pinned to true center, vertically centered
-  // ───────────────────────────────────────────────────────────
+  /* Pill-style nav centered */
   .nav-pills {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     display: flex;
     gap: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
     backdrop-filter: blur(10px);
     padding: 0.75rem 2rem;
     border-radius: 999px;
 
     a {
+      position: relative;
       color: $white;
       font-size: 1.125rem;
       font-weight: 500;
       padding: 0.75rem 1.5rem;
       border-radius: 999px;
       text-decoration: none;
-      transition: background .3s, color .3s;
+      overflow: hidden;
+
+      /* base transitions */
+      transition: 
+        transform .2s ease,
+        background .3s ease,
+        color .3s ease,
+        box-shadow .3s ease;
+
+      /* sliding gloss */
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0;
+        left: -120%;
+        width: 40%;
+        background: rgba(255,255,255,0.3);
+        transform: skewX(-25deg);
+        transition: left .5s ease-in-out;
+      }
 
       &:hover {
-        background: rgba(255, 255, 255, 0.2);
         color: $cta-color;
       }
     }
   }
 
-  // ───────────────────────────────────────────────────────────
-  // Mobile hamburger & dropdown (unchanged)
-  // ───────────────────────────────────────────────────────────
-  .hamburger {
-    display: none;
-    position: absolute;
-    top: 50%;
-    right: 1rem;
-    transform: translateY(-50%);
+
+}
+
+/* Mobile: hide desktop pills, show hamburger */
+@media (max-width: 768px) {
+  .nav-pills { display: none !important; }
+  .hamburger { display: flex !important; }
+  .mobile-nav { display: block !important; }
+}
+
+
+// ── Mobile Nav & Drawer ─────────────────────────────────
+.mobile-nav {
+  display: none;
+  position: fixed;
+  size: 500px;
+  right: 1rem;
+  z-index: 2000;
+  /* keep the toggle always visible */
+  &__toggle {
+    background: none;
+    border: none;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 24px;
-    height: 18px;
+    width: 2rem;
+    height: 1.5rem;
+    padding: 0;
     cursor: pointer;
 
-    span {
-      height: 3px;
-      background: $white;
+    .bar {
+      height: 15px;
+      background: $text-light;
       border-radius: 2px;
-      display: block;
-      transition: transform .3s, opacity .3s;
+      transition: transform 0.3s, opacity 0.3s;
     }
   }
 
-  &.menu-open {
-    .hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger span:nth-child(2) { opacity: 0; }
-    .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  }
-
-  .mobile-nav {
-    display: none; /* shown via *ngIf */
+  /* slide-in drawer */
+  &__drawer {
     position: fixed;
-    top: 160px;    /* sits just below the header */
-    left: 0;
+    top: 4rem;             // just below the toggle
+    right: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    max-width: 260px;
+    background: rgba($card-bg, 0.95);
     backdrop-filter: blur(10px);
+    box-shadow: -4px 0 12px rgba(0,0,0,0.6);
+    border-radius: 8px 0 0 8px;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-out;
+    overflow: hidden;
 
     ul {
       list-style: none;
       margin: 0;
-      padding: 1.5rem 1rem;
+      padding: 1rem 0;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+    }
 
-      a {
-        color: $white;
-        font-size: 1.25rem;
-        text-decoration: none;
-        transition: color .3s;
+    a {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      color: $text-light;
+      text-decoration: none;
+      font-size: 1.125rem;
+      transition: background 0.2s, color 0.2s;
 
-        &:hover {
-          color: $cta-color;
-        }
+      &:hover {
+        background: rgba($accent, 0.1);
+        color: $accent;
       }
     }
   }
+
+  // when open, slide drawer into view
+  &.open {
+    .mobile-nav__drawer {
+      transform: translateX(0);
+    }
+    .mobile-nav__toggle {
+      
+      .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+      .bar:nth-child(2) { opacity: 0; }
+      .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    }
+  }
+
+  .mobile-nav__toggle {
+    width: 3rem;            
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    font-size: 2.5rem;     
+    line-height: 1;
+  
+    margin-top: 50px;
+  
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+
+    &:hover {
+      background: rgba($accent, 0.1);
+      color: $accent;
+    }
+  }
+  
 }
 
-// Mobile: hide pills, show hamburger
-@media (max-width: 768px) {
-  .nav-pills  { display: none; }
-  .hamburger  { display: flex; }
-  .mobile-nav { display: block; }
+@media (max-width: 900px) {
+  header .nav-pills { display: none; }
+  .mobile-nav{ display: flex; }
 }
