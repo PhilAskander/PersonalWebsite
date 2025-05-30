@@ -1,0 +1,32 @@
+<header [class.scrolled]="isScrolled">
+  <div class="header-inner">
+
+    <!-- Logo on the far left -->
+    <a href="#hero" class="logo">
+      <img src="assets/logos/phil-logo.png" alt="Phil Askander Logo">
+    </a>
+
+    <!-- Center-aligned pill nav -->
+    <nav class="nav-pills">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- (Optional) Hamburger for mobile -->
+    <div class="hamburger" (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <div class="mobile-nav" *ngIf="menuOpen">
+    <ul>
+      <li><a href="#hero" (click)="toggleMenu()">Home</a></li>
+      <li><a href="#about" (click)="toggleMenu()">About</a></li>
+      <li><a href="#projects" (click)="toggleMenu()">Projects</a></li>
+      <li><a href="#contact" (click)="toggleMenu()">Contact</a></li>
+    </ul>
+  </div>
+</header>

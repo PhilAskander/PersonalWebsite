@@ -1,0 +1,84 @@
+<app-header></app-header>
+<section #section id="hero" class="hero-vid section">
+  <video
+  #heroVideo
+  muted            
+  autoplay
+  loop
+  playsinline     
+  preload="auto"
+  class="hero-vid__bg"
+>
+  <source src="/assets/Portfolio.mp4" type="video/mp4" />
+  Your browser doesn’t support video.
+</video>
+  <div class="hero-vid__overlay">
+    <div class="hero-content">
+
+      <!-- TEXT COLUMN -->
+      <div class="hero-text">
+        <h1>
+          {{ displayText }}<span class="cursor"></span>
+        </h1>
+        <p>An Passionate Full Stack Developer Shaping A New World of Technology.</p>
+      </div>
+
+
+    </div>
+
+  </div>
+</section>
+<main>
+
+  <!-- ABOUT -->
+  <section #section id="about" class="about section">
+    <div class="about-content">
+      <img src="assets/profile.png" alt="Phil Askander" class="about-photo">
+      <div>
+        <h2>Who is Phil Askander?</h2>
+        <p>
+          Software Engineer at Fidelity Investments<br>
+          BSc in CS & Math (UMass Lowell) • MSc in CS (Northeastern University)
+        </p>
+        <ul class="hobbies">
+          <li><img src="assets/icons/basketball.svg">Basketball coach & die-hard Celtics fan</li>
+          <li><img src="assets/icons/football.svg">Football enthusiast</li>
+        </ul>
+        <div class="logos">
+          <img src="assets/logos/umass.png" alt="UMass Lowell">
+          <img src="assets/logos/northeastern.png" alt="Northeastern">
+          <img src="assets/logos/fidelity.png" alt="Fidelity">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section #section id="projects" class="projects section">
+    <h2>Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>App One</h3>
+        <p>A slick Angular PWA</p>
+        <a href="#">Explore →</a>
+      </div>
+      <div class="card">
+        <h3>App Two</h3>
+        <p>Node + Express API</p>
+        <a href="#">Explore →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section #section id="contact" class="contact section">
+    <h2>Contact</h2>
+    <form (ngSubmit)="onContact($event)" #contactForm="ngForm">
+      <input name="name" ngModel type="text"   placeholder="Your Name"  required>
+      <input name="email" ngModel type="email" placeholder="Your Email" required>
+      <textarea name="message" ngModel rows="4" placeholder="Your Message" required></textarea>
+      <button type="submit" class="cta">Send Message</button>
+    </form>
+  </section>
+
+</main>

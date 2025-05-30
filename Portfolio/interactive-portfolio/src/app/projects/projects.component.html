@@ -1,0 +1,10 @@
+<section class="projects container">
+  <h2>Projects</h2>
+  <div class="grid">
+    <div class="card" *ngFor="let p of items">
+      <h3>{{p.title}}</h3>
+      <p>{{p.desc}}</p>
+      <a [href]="p.url">Explore →</a>
+    </div>
+  </div>
+</section>
